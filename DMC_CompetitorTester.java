@@ -1,101 +1,13 @@
 import java.util.*;
 
 /**
- * This class performs the score calculations based on the
- * scores stored in the Database_System class.
+ * This class tests the methods in the DMC_Competitor class.
  *
  * @author Denisa-Maria Cretu
- * @version 29/12/2023
+ * @version 04/01/2024
  */
 
-public class ScoreCalculator {
-
-    // double[] scores = competitor.getScoreArray();
-    /**
-    I added a scores arraylist in the UML diagram, but then I noticed this was not necessary as
-    the scores are linked to the competitor, therefore I decided not to add it.
-     */
-
-    /**
-    The scores have also been changed from int to double as I have seen that in the description
-    of the second part of this assignment it shows that the scores are represented as of type
-    double and not int
-     */
-    private ArrayList<DMC_Competitor> competitors = new ArrayList<DMC_Competitor>();
-    private double averageScore;
-    private double totalScore;
-    private double maxScore;
-    private double minScore;
-
-    /** Constructor */
-    public ScoreCalculator(ArrayList<DMC_Competitor> competitors)
-    {
-        competitors = competitors;
-    }
-
-    /**
-     * Calculates the overall score
-     *
-     * @return int overall score
-     */
-    public double calculateOverallScore()
-    {
-        double totalOverallScore = 0;
-        for (DMC_Competitor competitor : competitors) {
-            totalOverallScore += competitor.getOverallScore();
-        }
-        return totalOverallScore / competitors.size();
-    }
-
-    /**
-     * Calculates the max score
-     *
-     * @return int max score
-     */
-    public double calculateMaxScore()
-    {
-        double maxScore = 0;
-        for (DMC_Competitor competitor : competitors) {
-            double overallScore = competitor.getOverallScore();
-            if (overallScore > maxScore) {
-                maxScore = overallScore;
-            }
-        }
-        return maxScore;
-    }
-
-    /**
-     * Calculates the min score
-     *
-     * @return int min score
-     */
-    public double calculateMinScore()
-    {
-        double minScore = 0;
-        for (DMC_Competitor competitor : competitors) {
-            double overallScore = competitor.getOverallScore();
-            if (overallScore < minScore) {
-                minScore = overallScore;
-            }
-        }
-        return minScore;
-    }
-
-    /**
-     * Calculates the total score
-     *
-     * @return int total score
-     */
-    public double calculateTotalScore()
-    {
-        double totalScore = 0;
-        for (DMC_Competitor competitor : competitors) {
-            totalScore += competitor.getOverallScore();
-        }
-        return totalScore;
-    }
-
-
+public class DMC_CompetitorTester {
 
     public static void main(String[] args)
     {
@@ -161,11 +73,21 @@ public class ScoreCalculator {
         Name maariyah = new Name("Maariyah", "Roth", "Stone");
         DMC_Competitor Maariyah = new DMC_Competitor(1014, maariyah, "MRS", 59, "maariyahstone@mail.com", "junior", 3, maariyahScores);
 
-
         // Test methods
-        String lauraScr = DMC_Competitor.getCompetitorScores(Laura);
-        String sueScr = DMC_Competitor.getCompetitorScores(Sue);
+        System.out.println(Laura.getCompetitorNo());
+        System.out.println(ryan.getFirstName());    // Method from Name class
+        System.out.println(zach.getMiddleName());   // Method from Name class
+        System.out.println(erin.getSurname());      // Method from Name class
+        System.out.println(Nora.getInitials());
+        System.out.println(Susanna.getAge());
+        System.out.println(Nate.getEmail());
+        System.out.println(Lee.getCategory());
+        System.out.println(Philippa.getLevel());
+        System.out.println(Maariyah.getFullDetails());
+        System.out.println(Maariyah.getShortDetails());
 
+        String lauraScr = Laura.getCompetitorScores(Laura);
+        String sueScr = Sue.getCompetitorScores(Sue);
         System.out.println(lauraScr);
         System.out.println(sueScr);
 
