@@ -96,7 +96,10 @@ public class ScoreCalculator {
     }
 
 
-
+    /**
+     * Test
+     * @param args
+     */
     public static void main(String[] args)
     {
 

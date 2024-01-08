@@ -13,70 +13,86 @@ import java.util.ArrayList;
  */
 public class Database_System {
 
-    private ArrayList<DMC_Competitor> competitor = new ArrayList<DMC_Competitor>();
-    private ArrayList<ScoreCalculator> calculator = new ArrayList<ScoreCalculator>();
+    private ArrayList<DMC_Competitor> competitors = new ArrayList<DMC_Competitor>();
+    private ScoreCalculator calculator;
+    private ArrayList<Staff> staff = new ArrayList<Staff>();
 
-    /** Constructor */
-    public Database_System()
-    {
-        // Need to add competitorID and their scores
-    }
-
-    /** Getter and setter methods */
-    /*
-    I have added and modified a few methods based on new requirements present in part two
-    of the assigment brief
-    */
-    public double getTotalScore(int Id) // change to score calc
-    {
-        for (int i = 0; i < competitor.size(); i++)
-        {
-            DMC_Competitor comp = competitor.get(i);
-            if (Id == comp.getCompetitorNo())
-            {
-                double overallScore = comp.getOverallScore();
-                return overallScore;
-            }
-
-        }
-        return 0;
-    }
-    public double getAverageScore(){return 0;}
-    public double getMaxScore(){
-        // find competitor by id
-        // then get the scores for that competitor
-        return 0;
-    }
-    public double getMinScore(){return 0;}
-    // since staff can do this, and database is a parent class to staff and competitor, these
-    // methods are instead added to database class since this is where the staff will login and
-    // add/ remove scores, not from the staff class
-    public double addScore(){return 0;}
-    public double removeScore(){return 0;}
-
-
-    // public DMC_Competitor addCompetitor(){return competitor;}
-    // public DMC_Competitor removeCompetitor(){return competitor;}
 
     /**
-     * Looks for the competitor based on their competitor number
-     * @param Id
-     * @return competitor
+     * Getter methods for summary statistics from ScoreCalculator class
+     *
+     * @return int total score, overall score, max score, min score
      */
-    public DMC_Competitor findCompetitorById(int Id){
-
-        for (int i = 0; i < competitor.size(); i++)
-        {
-            DMC_Competitor comp = competitor.get(i);
-            if (Id == comp.getCompetitorNo())
-            {return comp;}
-        }
-        return null;
+    public double getTotalScore() {
+        return calculator.calculateTotalScore();
     }
 
+    public double getAverageScore() {
+        return calculator.calculateOverallScore();
+    }
 
+    public double getMaxScore() {
+        return calculator.calculateMaxScore();
+    }
 
+    public double getMinScore() {
+        return calculator.calculateMinScore();
+    }
 
+    /**
+     * Gets the competitor full details by using the getFullDetails() method from DMC_Competitor
+     *
+     * @return String competitor information
+     */
+    public String getCompetitorDetails() {
+        StringBuilder info = new StringBuilder();
+
+        for (DMC_Competitor comp : competitors) {
+            info.append(comp.getFullDetails());
+        }
+        return info.toString();
+    }
+
+    /**
+     * Gets the competitor short details by using the getShortDetails() method from DMC_Competitor
+     *
+     * @return String competitor information
+     */
+    public String getCompetitorShort() {
+        StringBuilder info = new StringBuilder();
+
+        for (DMC_Competitor comp : competitors) {
+            info.append(comp.getShortDetails());
+        }
+        return info.toString();
+    }
+
+    /**
+     * Gets the staff details by using the getStaffDetails() method from Staff
+     *
+     * @return String Staff information
+     */
+    public String listAllStaff()
+    {
+        StringBuilder staffInfo = new StringBuilder();
+        for(Staff s: staff)
+        {
+            staffInfo.append(s.getStaffDetails());
+        }
+        return staffInfo.toString();
+    }
+
+    /**
+     * Gets the competitor summary statistics
+     *
+     * @return String summary statistics
+     */
+    public String listAllSummaryStatistics(int Id) {
+        return "Min scores: " + calculator.calculateMinScore() + "Max scores: " +
+                calculator.calculateMaxScore() + "Overall scores: " + calculator.calculateOverallScore() +
+                "Total scores: " + calculator.calculateTotalScore();
+
+    }
 
 
 }

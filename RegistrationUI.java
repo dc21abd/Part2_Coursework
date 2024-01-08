@@ -1,5 +1,9 @@
 import javax.xml.crypto.Data;
-import java.util.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
  * This is the GUI
  *
@@ -7,52 +11,71 @@ import java.util.*;
  * @version 04/01/2024
  */
 
-public class RegistrationUI {
-    private Scanner reader = new Scanner(System.in);
-    private Database_System database = new Database_System();
+public class RegistrationUI extends JFrame {
+    private Registration_System registration;
 
-    private void runUI()
+    private JTextField name;
+    private JTextField age;
+    private JTextField email;
+    private JTextField button;
+
+    public RegistrationUI(Registration_System registration)
     {
-        int choice = getOption();
-        while (choice != 0)
-        {
-            // process choice
-            if      (choice == 1){();}
-            else if (choice == 2){();}
-            else if (choice == 3){();}
-            else if (choice == 4){();}
-            else if (choice == 5){();}
-            else if (choice == 6){();}
-            else if (choice == 7){();}
-            else if (choice == 8){();}
-            else if (choice == 9){();}
+        this.registration = registration;
+        setTitle("Registration System");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(200, 200);
+        setLayout(new GridLayout(5, 2));
 
-            // output menu & get choice
-
-            choice = getOption();
-        }
-        System.out.println("\nThank-you");
+        initUI();
     }
 
-    private int getOption()
+    private void initUI()
     {
-        System.out.println("What would you like to do ?");
-        System.out.println("0. Quit");
-        System.out.println("1. ");
-        System.out.println("2. ");
-        System.out.println("3. ");
-        System.out.println("4. ");
-        System.out.println("5. ");
-        System.out.println("6. ");
-        System.out.println("7. ");
-        System.out.println("8. ");
-        System.out.println("9. ");
+        add(new JLabel("Name: "));
+        name = new JTextField();
+        add(name);
 
-        System.out.println("Enter your choice");
-        // read choice
-        int option = reader.nextInt();
-        reader.nextLine();
-        return option;
+        add(new JLabel("Age: "));
+        age = new JTextField();
+        add(age);
+
+        add(new JLabel("Email: "));
+        email = new JTextField();
+        add(email);
+
+        add(new JButton("Register"));
+        add(button);
+
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                registerComp();
+            }
+        });
     }
+
+    private void registerComp()
+    {
+        String nameIn = name.getText();
+        int ageIn = Integer.parseInt(age.getText());
+        String emailIn = email.getText();
+
+        registration.registerCompetitor(nameIn, ageIn, emailIn);
+    }
+
+    public static void main(String[] args)
+    {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run()
+            {
+                Registration_System registration = new Registration_System();
+                RegistrationUI ui = new RegistrationUI(registration);
+                ui.setVisible(true);
+            }
+        });
+    }
+
 
 }

@@ -40,10 +40,11 @@ public class Staff {
      * The staff access level is as follows:
      *         Level 1 = staff member can access all the information about competitors. Can add and remove a competitor
      *         Level 2 = staff member can access all the information about competitors. Cannot add or remove competitor.
-     *         Level 3 = staff member can access limited information about competitors. Cannot add or remove competitor.
      */
-
-
+    public boolean canModify()
+    {
+        return accessLevel == 1;
+    }
 
     /**
      * Adds/ registers a competitor
@@ -99,17 +100,36 @@ public class Staff {
         }
     }
 
+    public String getStaffDetails()
+    {
+        return "\n******** Competitor Details ********" + "\nStaff ID: " + staffID + " with full name: " + name.toString() +
+                " and access level: " + accessLevel;
+    }
 
 
-
+    /**
+     * Test
+     * @param args
+     */
     public static void main(String[] args)
     {
 
+        // Staff test data
         Name staff01 = new Name("Staff", "No", "One");
-        Staff staffOne = new Staff(0001, staff01, "staffone@mail.com", 284682726, 1);
+        Staff staffOne = new Staff(0001, staff01, "staffone@mail.com", 284652726, 1);
 
-        Name staff02 = new Name("Staff", "No", "One");
-        Staff staffTwo = new Staff(0002, staff02, "stafftwo@mail.com", 823497597, 3);
+        Name staff02 = new Name("Staff", "No", "Two");
+        Staff staffTwo = new Staff(0002, staff02, "stafftwo@mail.com", 823497597, 2);
+
+        Name staff03 = new Name("Staff", "No", "Three");
+        Staff staffThree = new Staff(0003, staff03, "staffthree@mail.com", 253417239, 2);
+
+        Name staff04 = new Name("Staff", "No", "Four");
+        Staff staffFour = new Staff(0004, staff04, "stafffour@mail.com", 237346423, 1);
+
+        Name staff05 = new Name("Staff", "No", "Five");
+        Staff staffFive = new Staff(0005, staff05, "stafffive@mail.com", 876453993, 1);
+
 
         // Competitor Test Data
         double[] lauraScores = {1, 4.2, 5, 3.7, 2};
@@ -198,6 +218,13 @@ public class Staff {
         Staff.addCompetitor(Laura);
 
         System.out.println(staffOne.printSummaryReport(1000));
+        System.out.println(staffTwo.getStaffID());
+        System.out.println(staffThree.getName());
+        System.out.println(staffFour.getEmail());
+        System.out.println(staffFive.getTelephoneNo());
+        System.out.println(staffOne.getAccessLevel());
+        System.out.println(staffOne.canModify());
+        System.out.println(staffTwo.canModify());
 
     }
 

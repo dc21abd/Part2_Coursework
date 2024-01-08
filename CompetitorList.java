@@ -1,8 +1,156 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+/**
+ * This class stores and manages the competitor details.
+ *
+ * @author Denisa-Maria Cretu
+ * @version 04/01/2024
+ */
 
 public class CompetitorList {
 
     private ArrayList<DMC_Competitor> competitors = new ArrayList<DMC_Competitor>();
+
+    /**
+     * Adds a competitor to the arraylist
+     *
+     * @return
+     */
+    public void addCompetitors(DMC_Competitor competitor)
+    {
+        competitors.add(competitor);
+    }
+
+    /**
+     * Gets the competitor table
+     *
+     * @return ArrayList table
+     */
+    public ArrayList<String> getTable()
+    {
+        ArrayList<String> table = new ArrayList<>();
+        for(DMC_Competitor competitor : competitors)
+        {
+            table.add(competitor.getFullDetails());
+        }
+        return table;
+    }
+
+
+    /**
+     * Looks for the competitor with the best scores among all competitors
+     *
+     * @return String with top competitor details
+     */
+    public String getTopCompetitor()
+    {
+        DMC_Competitor topComp = competitors.get(0);
+        for(DMC_Competitor competitor : competitors)
+        {
+            if(competitor.getOverallScore() > topComp.getOverallScore())
+            {
+                topComp = competitor;
+            }
+        }
+        return topComp.getFullDetails();
+
+    }
+
+    /**
+     * Gets the minimin, maximum, total and overall scores of the competitors.
+     *
+     * @return String stats
+     */
+    public String getSummaryStats()
+    {
+        StringBuilder stats = new StringBuilder("*****Summary Statistics*****\n");
+
+        for(DMC_Competitor competitor : competitors)
+        {
+            double overallScr = competitor.getOverallScore();
+            double minScr = competitor.getMinScore();
+            double maxScr = competitor.getMaxScore();
+            double totalScr = competitor.getTotalScore();
+
+            stats.append("Competitor No: ").append(competitor.getCompetitorNo());
+            stats.append(", Min score: ").append(minScr);
+            stats.append(", Max score: ").append(maxScr);
+            stats.append(", Total score: ").append(totalScr);
+            stats.append(", Overall score: ").append(overallScr);
+        }
+        return stats.toString();
+    }
+
+    /*
+    public String getFrequencyReport()
+    {
+
+    }
+     */
+
+    /**
+     * It checks for a competitor's ID and then returns the short details
+     *
+     * @return String with short competitor details
+     */
+    public String giveShortDetails(int Id)
+    {
+        for(DMC_Competitor competitor : competitors)
+        {
+            if(competitor.getCompetitorNo() == Id)
+            {
+                return competitor.getShortDetails();
+            }
+        }
+        return "Not found";
+    }
+
+    // Read details of each competitor
+    public void readCompetitorFile(String file)
+    {
+        competitors = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file)))
+        {
+
+            String line;
+            while ((line = br.readLine()) != null)
+            {
+                String[] data = line.split(",");
+
+                int competitorNo = Integer.parseInt(data[0]);
+                Name name = new Name(data[1], data[2], data[3]);
+                String initials = data[4];
+                int age = Integer.parseInt(data[5]);
+                String email = data[6];
+                String category = data[7];
+                int level = Integer.parseInt(data[8]);
+
+                String[] scrs = data[9].split(",");
+                double[] scr = new double[scrs.length];
+                for(int i = 0; i < scrs.length; i++)
+                {
+                    scr[i] = Double.parseDouble(scrs[i]);
+                }
+                DMC_Competitor competitor = new DMC_Competitor(competitorNo, name, initials, age, email, category, level, scr);
+                competitors.add(competitor);
+            }
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch(NumberFormatException e)
+        {
+            System.err.println("Error parsing numeric values");
+            e.printStackTrace();
+        }
+    }
+
 
     // All competitor objects
     double[] lauraScores = {1, 4.2, 5, 3.7, 2};
@@ -66,8 +214,4 @@ public class CompetitorList {
     Name maariyah = new Name("Maariyah", "Roth", "Stone");
     DMC_Competitor Maariyah = new DMC_Competitor(1014, maariyah, "MRS", 59, "maariyahstone@mail.com", "junior", 3, maariyahScores);
 
-
-    // Read details of each competitor
-
-    //
 }

@@ -17,7 +17,6 @@ public class DMC_Competitor {
     private int level;
     private double[] scores = new double[5]; // array of size 6 with scores from 0 to 5
 
-
     /**
      * Constructor
      */
@@ -32,7 +31,6 @@ public class DMC_Competitor {
         scores = scr;
     }
 
-
     /**
      * Getter methods
      */
@@ -44,7 +42,6 @@ public class DMC_Competitor {
     public String getCategory() {return category;}
     public int getLevel() {return level;}
     public double[] getScoreArray() {return scores;}
-
 
     /**
      * Returns the scores of the competitors as a String. This method has been added because
@@ -79,6 +76,54 @@ public class DMC_Competitor {
         }
         overallScr = sumScores / scores.length;
         return overallScr;
+    }
+
+    /**
+     * Calculates the max score
+     *
+     * @return int max score
+     */
+    public double getMaxScore()
+    {
+        double maxScore = 0;
+        for (int i = 0; i < scores.length; i++) {
+            double overallScore = getOverallScore();
+            if (overallScore > maxScore) {
+                maxScore = overallScore;
+            }
+        }
+        return maxScore;
+    }
+
+    /**
+     * Calculates the min score
+     *
+     * @return int min score
+     */
+    public double getMinScore()
+    {
+        double minScore = 0;
+        for (int i = 0; i < scores.length; i++) {
+            double overallScore = getOverallScore();
+            if (overallScore < minScore) {
+                minScore = overallScore;
+            }
+        }
+        return minScore;
+    }
+
+    /**
+     * Calculates the total score
+     *
+     * @return int total score
+     */
+    public double getTotalScore()
+    {
+        double totalScore = 0;
+        for (int i = 0; i < scores.length; i++) {
+            totalScore += getOverallScore();
+        }
+        return totalScore;
     }
 
 
@@ -122,20 +167,19 @@ public class DMC_Competitor {
     // categories: junior, intermediate, advanced
     // levels: 1 - 3. The levels say how advanced each competitor is in the category they are in and how much they are far from
     // reaching the next category. It goes from 1 being the lowest level to 3 the highest. They are promoted to the next category
-    // based on certain conditions which are not covered for this assignment.
+    // based on age.
 
-
-
-
-
-
+    /**
+     * Test
+     * @param args
+     */
     public static void main(String[] args)
     {
 
         double[] lauraScores = {1, 4.2, 5, 3.7, 2};
         Name laura = new Name("Laura", "Dorset", "Sanders");
         // Competitor Test Data
-        DMC_Competitor Laura = new DMC_Competitor(1000, laura, "LDS", 23, "laurasanders@mail.com", "Junior", 1, lauraScores);
+        DMC_Competitor Laura = new DMC_Competitor(1000, laura, "LDS", 23, "laurasanders@mail.com", "junior", 1, lauraScores);
 
         double[] sueScores = {3, 5, 3.4, 2, 1.9};
         Name sue = new Name("Sue", "Tabolt", "Turner");
